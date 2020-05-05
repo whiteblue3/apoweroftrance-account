@@ -18,7 +18,7 @@ from django_utils import aes, storage
 if settings.DOMAIN_URL is None:
     domain_url = "127.0.0.1:8080"
 else:
-    domain_url = settings.DOMAIN_URL
+    domain_url = settings.AUTH_DOMAIN_URL
 
 if settings.ACCOUNT_API_PATH is None:
     user_api_path = "/v1/user"
@@ -114,10 +114,14 @@ def accesslog(request, access_type, status, email, ip):
         'email': email,
         'ip_address': ip,
         'request': '%s %s' % (request.method, request.get_full_path()),
-        'request_body': str(request.data),
         'access_type': access_type,
         'access_status': status
     }
+
+    if hasattr(request, 'data'):
+        data['request_body'] = str(request.data)
+    else:
+        data['request_body'] = None
 
     """Remove authenticate information for security"""
     if access_type is ACCESS_TYPE_AUTHENTICATE:

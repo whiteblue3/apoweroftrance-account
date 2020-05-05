@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import json
 from django.conf.locale.en import formats as en_formats
 from google.oauth2 import service_account
 import logging.config
@@ -18,14 +19,17 @@ from django.utils.log import DEFAULT_LOGGING
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SECRET_FILE = os.path.join(BASE_DIR, 'secret.json')
+
+secret = json.loads(open(SECRET_FILE).read())
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+SECRET_KEY = secret['SECRET_KEY']
+JWT_SECRET_KEY = secret['JWT_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -373,8 +377,8 @@ STORAGE_DRIVER = "gcs"
 # AES Setup #
 #############
 
-AES_KEY = os.environ.get('AES_KEY')
-AES_SECRET = os.environ.get('AES_SECRET')
+AES_KEY = secret['AES_KEY']
+AES_SECRET = secret['AES_SECRET']
 
 
 ###############
@@ -384,8 +388,8 @@ AES_SECRET = os.environ.get('AES_SECRET')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = secret['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = secret['EMAIL_HOST_PASSWORD']
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
@@ -406,6 +410,7 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 # ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400 # 1 day in seconds
 # ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 
+AUTH_DOMAIN_URL = "127.0.0.1:8081"
 ACCOUNT_API_PATH = "/v1/user"
 
 
