@@ -22,3 +22,4 @@ cd /backend
 #done
 #uwsgi --show-config
 exec "$@"
+
