@@ -7,6 +7,15 @@ from .access_log import *
 from .util import accesslog
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
 @receiver(post_save, sender=User)
 def create_related_profile(sender, instance, created, *args, **kwargs):
     # Notice that we're checking for `created` here. We only want to do this
@@ -19,15 +28,17 @@ def create_related_profile(sender, instance, created, *args, **kwargs):
 
 @receiver(user_logged_in)
 def sig_user_logged_in(sender, user, request, **kwargs):
+    ip = get_client_ip(request)
     accesslog(
         request, ACCESS_TYPE_AUTHENTICATE, ACCESS_STATUS_SUCCESSFUL,
-        user.email, request.META['REMOTE_ADDR']
+        user.email, ip
     )
 
 
 @receiver(user_logged_out)
 def sig_user_logged_out(sender, user, request, **kwargs):
+    ip = get_client_ip(request)
     accesslog(
         request, ACCESS_TYPE_LOGOUT, ACCESS_STATUS_SUCCESSFUL,
-        user.email, request.META['REMOTE_ADDR']
+        user.email, ip
     )
