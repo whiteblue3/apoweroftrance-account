@@ -95,14 +95,14 @@ ENV MIGRATE 0
 ENV AUTOSTART 1
 
 
-## Uncommend when production
-#FROM deploy AS production
-#MAINTAINER @whiteblue3 https://github.com/whiteblue3
-#COPY . /backend/
-#RUN chown -R ${USER}:${USER} /backend
-#RUN rm requirement.txt && rm Dockerfile && rm build_push_docker_image.sh && rm -rf .git && rm -rf .gitignore \
-#    && rm apoweroftrance-django-utils-0.0.1.tar.gz && rm -rf apoweroftrance_account.egg-info \
-#    && rm -rf build && rm -rf dist && rm package.sh && rm setup.py && rm -rf accounts/migrations
+# Uncommend when production
+FROM deploy AS production
+MAINTAINER @whiteblue3 https://github.com/whiteblue3
+COPY . /backend/
+RUN chown -R ${USER}:${USER} /backend
+RUN rm requirement.txt && rm Dockerfile && rm build_push_docker_image.sh && rm -rf .git && rm -rf .gitignore \
+    && rm apoweroftrance-django-utils-0.0.1.tar.gz && rm -rf apoweroftrance_account.egg-info \
+    && rm -rf build && rm -rf dist && rm package.sh && rm setup.py && rm -rf accounts/migrations
 
 
 USER ${USER}
