@@ -249,7 +249,7 @@ def send_reset_password_email(email):
 
     BODY = '\r\n'.join(['To: %s' % email,
                         'From: %s' % from_email,
-                        'Subject: %s' % activate_account_email_title,
+                        'Subject: %s' % reset_password_email_title,
                         '', email_body])
 
     server.sendmail(settings.EMAIL_HOST_USER, [email], BODY.encode('utf-8'))
@@ -291,7 +291,7 @@ def notify_security_email(email, ip_address, token, request, accesslog_pk):
 
     BODY = '\r\n'.join(['To: %s' % email,
                         'From: %s' % from_email,
-                        'Subject: %s' % activate_account_email_title,
+                        'Subject: %s' % notify_security_alert_email_title,
                         '', email_body])
 
     server.sendmail(settings.EMAIL_HOST_USER, [email], BODY.encode('utf-8'))
