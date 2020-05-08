@@ -203,6 +203,7 @@ def send_account_activation_email(email):
     # send_mail(activate_account_email_title, message=email_body, html_message=email_html,
     #           from_email=from_email, recipient_list=[email], fail_silently=True)
 
+    # https://medium.com/@mika94322/python-smtp-email-%EC%A0%84%EC%86%A1-%EC%98%88%EC%A0%9C-c7e6e095dcfc
     server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
     server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
 
