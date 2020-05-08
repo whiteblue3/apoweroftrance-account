@@ -1,6 +1,7 @@
 import os
 import json
 import secrets
+import smtplib
 from datetime import datetime, timedelta
 import urllib.parse
 # from django.core.mail import send_mail
@@ -202,9 +203,21 @@ def send_account_activation_email(email):
     # send_mail(activate_account_email_title, message=email_body, html_message=email_html,
     #           from_email=from_email, recipient_list=[email], fail_silently=True)
 
-    msg = EmailMessage(activate_account_email_title,
-                       email_body, from_email=from_email, to=[email])
-    msg.send()
+    server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+    server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+
+    BODY = '\r\n'.join(['To: %s' % email,
+                        'From: %s' % from_email,
+                        'Subject: %s' % activate_account_email_title,
+                        '', email_body])
+
+    server.sendmail(settings.EMAIL_HOST_USER, [email], BODY.encode('utf-8'))
+
+    # msg = EmailMessage(activate_account_email_title,
+    #                    email_body, from_email=from_email, to=[email])
+    # msg.send()
+
+    server.quit()
 
 
 def send_reset_password_email(email):
@@ -230,9 +243,21 @@ def send_reset_password_email(email):
     # send_mail(reset_password_email_title, message=email_body, html_message=email_html,
     #           from_email=from_email, recipient_list=[email], fail_silently=True)
 
-    msg = EmailMessage(reset_password_email_title,
-                       email_body, from_email=from_email, to=[email])
-    msg.send()
+    server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+    server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+
+    BODY = '\r\n'.join(['To: %s' % email,
+                        'From: %s' % from_email,
+                        'Subject: %s' % activate_account_email_title,
+                        '', email_body])
+
+    server.sendmail(settings.EMAIL_HOST_USER, [email], BODY.encode('utf-8'))
+
+    # msg = EmailMessage(reset_password_email_title,
+    #                    email_body, from_email=from_email, to=[email])
+    # msg.send()
+
+    server.quit()
 
 
 def notify_security_email(email, ip_address, token, request, accesslog_pk):
@@ -260,6 +285,18 @@ def notify_security_email(email, ip_address, token, request, accesslog_pk):
     # send_mail(notify_security_alert_email_title, message=email_body, html_message=email_html,
     #           from_email=from_email, recipient_list=[email], fail_silently=True)
 
-    msg = EmailMessage(notify_security_alert_email_title,
-                       email_body, from_email=from_email, to=[email])
-    msg.send()
+    server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+    server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+
+    BODY = '\r\n'.join(['To: %s' % email,
+                        'From: %s' % from_email,
+                        'Subject: %s' % activate_account_email_title,
+                        '', email_body])
+
+    server.sendmail(settings.EMAIL_HOST_USER, [email], BODY.encode('utf-8'))
+
+    # msg = EmailMessage(notify_security_alert_email_title,
+    #                    email_body, from_email=from_email, to=[email])
+    # msg.send()
+
+    server.quit()
