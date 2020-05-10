@@ -26,6 +26,7 @@ setuptools.setup(
         "django-pgcrypto",
         "aiohttp",
         "redis",
+        "django-redis",
         "djangorestframework",
         "psycopg2-binary",
         "pyjwt",
