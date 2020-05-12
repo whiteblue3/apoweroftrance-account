@@ -1,11 +1,11 @@
-import os
+# import os
 import json
 import secrets
 import smtplib
 from datetime import datetime, timedelta
 import urllib.parse
 # from django.core.mail import send_mail
-from django.core.mail import EmailMessage
+# from django.core.mail import EmailMessage
 from django.conf import settings
 from .serializers import (
     AccessLogSerializer
