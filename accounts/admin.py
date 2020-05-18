@@ -37,7 +37,7 @@ class StaffFilter(SimpleListFilter):
 
 
 class AccessTypeFilter(admin.SimpleListFilter):
-    template = 'admin/dropdown_filter.html'
+    template = 'accounts/dropdown_filter.html'
 
     parameter_name = 'access_type'
     title = _('Access Type')
@@ -54,7 +54,7 @@ class AccessTypeFilter(admin.SimpleListFilter):
 
 
 class AccessStatusFilter(admin.SimpleListFilter):
-    template = 'admin/dropdown_filter.html'
+    template = 'accounts/dropdown_filter.html'
 
     parameter_name = 'access_status'
     title = _('Access Status')
